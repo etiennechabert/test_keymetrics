@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A server able to handle a NPM like CLI's requests",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "author": "chaber_e",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^1.26.2",
+    "express": "^4.16.1",
+    "mongoose": "^4.12.1"
+  }
+}
