@@ -1,10 +1,14 @@
 'use strict';
-let Express = require('express');
+let express = require('express');
+let server = express();
 
-let app = Express();
 let port = process.env.PORT || 3000;
 
-app.listen(port);
+server.use(require('./routes/moduleRoutes'));
+server.use(require('./routes/userRoutes'));
 
-console.log('todo list RESTful API server started on: ' + port);
+server.listen(port);
 
+console.log('Server is now on listening on port : ' + port);
+
+module.exports = server;
