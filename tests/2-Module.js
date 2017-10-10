@@ -118,12 +118,23 @@ describe("Module basic", function() {
     it("Download the new version", (done) => {
         chai.request(server)
             .get('/modules/' + module1.name + '/download')
+            .auth(userJson.email, userJson.password)
             .end((err, res) => {
+                expect(res.status).to.be.equal(200);
                 expect(res.body.tgzCheckSum).to.be.equals(md5(res.body.tgzBase64));
                 done();
             })
     });
-    it("Download the precedent version");
+    it("Download the precedent version", (done) => {
+        chai.request(server)
+            .get('/modules/' + module1.name + '/download/2.5.0')
+            .auth(userJson.email, userJson.password)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.tgzCheckSum).to.be.equals(md5(res.body.tgzBase64));
+                done();
+            })
+    });
 });
 
 describe("done", function() {
