@@ -5,7 +5,6 @@ let md5 = require('md5');
 let packageJsonValidator = require('package-json-validator').PJV;
 
 function moduleFormat(module) {
-    let lol = true;
     return {
         name: module.name,
         updated_at: module.updated_at,
@@ -17,11 +16,24 @@ function moduleFormat(module) {
             return {
                 version: e.version,
                 package: JSON.parse(e.package),
-                checkSum: e.tgzCheckSum,
+                checkSum: e.checkSum,
                 created_at: e.created_at
             }
         })
     };
+}
+
+function notFoundError(moduleName) {
+    return {notFound: moduleName}
+}
+
+function notFoundVersionError(module, expectedVersion) {
+    return {
+        notFoundVersionError: {
+            expectedVersion: expectedVersion,
+            availableVersions: (module.precedent_versions.map((e) => { return e.version})).push(module.current_version.version)
+        }
+    }
 }
 
 exports.all = function(req, res) {
@@ -39,7 +51,7 @@ exports.get = function(req, res) {
         else if (module)
             res.send({module: moduleFormat(module)});
         else
-            res.status(404).send({notFound: req.params.module_name});
+            res.status(404).send(notFoundError(req.params.module_name));
     });
 };
 
@@ -84,6 +96,12 @@ exports.download = function(req, res) {
     ModuleModel.get(req.params.module_name, function(err, module) {
         if (err)
             throw err;
-        res.send({tgzBase64: module.current_version.tgzBase64, tgzCheckSum: module.current_version.tgzCheckSum});
+        else if (!module)
+            return res.status(404).send(notFoundError(req.params.module_name));
+
+        let download = ModuleModel.download(module, req.params.version);
+        if (!download)
+            return res.status(404).send(notFoundVersionError(module, req.params.version));
+        return res.send(download);
     });
 };

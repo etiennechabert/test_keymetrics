@@ -2,7 +2,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 let expect = chai.expect;
-let UserSchema = require('../models/schemas/userSchema');
+let UserModel = require('../models/userModel');
 
 chai.use(chaiHttp);
 
@@ -15,7 +15,7 @@ let userId;
 
 describe('User prepare', function() {
    it("Truncate the base", function(done) {
-       UserSchema.remove({}, done);
+       UserModel.remove({}, done);
    })
 });
 

@@ -3,8 +3,8 @@ let mongoose = require('mongoose');
 
 let releaseSchema = new mongoose.Schema({
     version: {type: String, required: true,},
-    tgzBase64: {type: String, required: true,},
-    tgzCheckSum: {type: String, required: true,},
+    base64: {type: String, required: true,},
+    checkSum: {type: String, required: true,},
     package: {type: String, required: true,},
     created_at: {type: Date, default: Date.now},
 });

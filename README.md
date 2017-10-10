@@ -1,4 +1,8 @@
-Todo list for tonight
+**Start test :**
+mocha tests/1-User.js
+mocha tests/2-Module.js
+
+**Todo list for tonight**
 
 "Module errors case"
    * it("Should handle create module for user 404");

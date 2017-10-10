@@ -85,9 +85,9 @@ describe("Module basic", function() {
             .auth(userJson.email, userJson.password)
             .end((err, res) => {
                 expect(res.status).to.be.equal(200);
-                expect(res.body.tgzBase64).to.be.not.empty;
-                expect(res.body.tgzCheckSum).to.be.not.empty;
-                expect(res.body.tgzCheckSum).to.be.equals(md5(res.body.tgzBase64));
+                expect(res.body.base64).to.be.not.empty;
+                expect(res.body.checkSum).to.be.not.empty;
+                expect(res.body.checkSum).to.be.equals(md5(res.body.base64));
                 done();
             })
     });
@@ -121,7 +121,7 @@ describe("Module basic", function() {
             .auth(userJson.email, userJson.password)
             .end((err, res) => {
                 expect(res.status).to.be.equal(200);
-                expect(res.body.tgzCheckSum).to.be.equals(md5(res.body.tgzBase64));
+                expect(res.body.checkSum).to.be.equals(md5(res.body.base64));
                 done();
             })
     });
@@ -131,18 +131,41 @@ describe("Module basic", function() {
             .auth(userJson.email, userJson.password)
             .end((err, res) => {
                 expect(res.status).to.be.equal(200);
-                expect(res.body.tgzCheckSum).to.be.equals(md5(res.body.tgzBase64));
+                expect(res.body.checkSum).to.be.equals(md5(res.body.base64));
+                expect(res.body.version).to.be.equals('2.5.0');
                 done();
             })
     });
 });
 
 describe("Module errors case", function() {
-    it("Should handle create module for user 404");
-    it("Should handle a publish update for an unautorized user");
-    it("Should handle a get on a module 404");
-    it("SHould handle a download on a module 404");
-    it("Should handle a download of an existing module but for a version 404")
+    it("Should handle a get on a module 404", (done) => {
+        chai.request(server)
+            .get('/modules/404')
+            .auth(userJson.email, userJson.password)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(404);
+                done();
+            });
+    });
+    it("Should handle a download on a module 404", (done) => {
+        chai.request(server)
+            .get('/modules/404/download')
+            .auth(userJson.email, userJson.password)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(404);
+                done();
+            });
+    });
+    it("Download the precedent version", (done) => {
+        chai.request(server)
+            .get('/modules/' + module1.name + '/download/404')
+            .auth(userJson.email, userJson.password)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(404);
+                done();
+            })
+    });
 });
 
 describe("done", function() {
