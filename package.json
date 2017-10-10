@@ -16,9 +16,12 @@
     "body-parser": "^1.18.2",
     "config": "^1.26.2",
     "express": "^4.16.1",
+    "md5": "^2.2.1",
     "mongoose": "^4.12.1",
+    "package-json-validator": "^0.6.2",
     "passport": "^0.4.0",
-    "passport-http": "^0.3.0"
+    "passport-http": "^0.3.0",
+    "strip-json-comments": "^2.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

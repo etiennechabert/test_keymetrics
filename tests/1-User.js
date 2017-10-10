@@ -79,7 +79,7 @@ describe('User error test', function() {
             .post('/users')
             .send(userJson)
             .end((err) => {
-                expect(err.response.status).to.be.equal(401);
+                expect(err.response.status).to.be.equal(400);
                 done();
             });
     });

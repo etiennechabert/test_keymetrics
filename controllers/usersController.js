@@ -29,7 +29,7 @@ exports.get = function(req, res) {
                     res.status(400).send({formatError: error.message});
                     break;
                 case 'MongoError':
-                    res.status(401).send({userError: error.message});
+                    res.status(400).send({userError: error.message});
                     break;
                 default:
                     throw error;
@@ -49,7 +49,7 @@ exports.create = function(req, res) {
                     res.status(400).send({userError: error.message});
                     break;
                 case 'MongoError':
-                    res.status(401).send({userError: error.message});
+                    res.status(400).send({userError: error.message});
                     break;
                 default:
                     throw error;

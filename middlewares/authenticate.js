@@ -10,9 +10,11 @@ passport.use(new BasicStrategy(
         UserModel.findByEmail(email, function (err, user) {
             if (err) { return done(err); }
             if (!user) { return done(null, false); }
-            user.comparePassword(password, (e1, e2, e3) => {
-                done(null, false);
-                done(null, user);
+            user.comparePassword(password, (err, match) => {
+                if (err || match === false)
+                    done(null, false);
+                else
+                    done(null, user);
             });
         });
     }

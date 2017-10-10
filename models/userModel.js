@@ -1,18 +1,24 @@
 'use strict';
+let mongoose = require('mongoose');
 let UserSchema = require('./schemas/userSchema');
 
-module.exports.all = function(err, res) {
-    UserSchema.find(err, res);
+mongoose.model('UserModel', UserSchema);
+let UserModel = mongoose.model('UserModel');
+
+UserModel.all = function(err, res) {
+    UserModel.find(err, res);
 };
 
-module.exports.create = function(data, cb) {
-    new UserSchema(data).save(data, cb);
+UserModel.create = function(data, cb) {
+    new UserModel(data).save(cb);
 };
 
-module.exports.get = function(userId, cb) {
-    UserSchema.findOne({_id: userId}, cb);
+UserModel.get = function(userId, cb) {
+    UserModel.findOne({_id: userId}, cb);
 };
 
-module.exports.findByEmail = function(email, cb) {
-    UserSchema.findOne({email: email}, cb);
+UserModel.findByEmail = function(email, cb) {
+    UserModel.findOne({email: email}, cb);
 };
+
+module.exports = UserModel;
