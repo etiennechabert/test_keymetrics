@@ -12,3 +12,7 @@ module.exports.create = function(data, cb) {
 module.exports.get = function(userId, cb) {
     UserSchema.findOne({_id: userId}, cb);
 };
+
+module.exports.findByEmail = function(email, cb) {
+    UserSchema.findOne({email: email}, cb);
+};

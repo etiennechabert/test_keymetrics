@@ -57,9 +57,3 @@ exports.create = function(req, res) {
         }
     })
 };
-
-exports.edit = function(req, res) {
-};
-
-exports.auth = function(req, res) {
-};

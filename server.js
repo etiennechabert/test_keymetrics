@@ -1,27 +1,30 @@
 'use strict';
+
 let express = require('express');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let config = require('config');
 let server = express();
 
-let port = process.env.PORT || 3000;
+// Basic Auth engine -- Passport
+let authenticate = require("./middlewares/authenticate");
 
-let modulesRoutes = require('./routes/modulesRoutes');
-let usersRoutes = require('./routes/usersRoutes');
-
+// Mongoose connection
 mongoose.Promise = global.Promise;
 mongoose.connect(config.get('mongo_uri'), {useMongoClient: true});
 
-server.use(bodyParser.urlencoded({
-    extended: true
-}));
+// Middle definition
+server.use(bodyParser.urlencoded({extended: true}));
 server.use(bodyParser.json());
+server.use(authenticate.initialize());
 
-server.use('/modules', modulesRoutes);
-server.use('/users', usersRoutes);
+// Router section
+server.use('/modules', require('./routes/modulesRoutes'));
+server.use('/users', require('./routes/usersRoutes'));
 
-server.listen(port);
-console.log('Server is now on listening on port : ' + port);
+// Starting server
+server.listen(config.get('application_port'));
+console.log('Server is now on listening on port : ' + config.get('application_port'));
 
+// Export server for CHAI-HTTP testing
 module.exports = server;

@@ -1,4 +1,5 @@
 {
+  "application_port" : 3000,
   "bcrypt_salt_work_factor": 10,
   "mongo_uri": "mongodb://localhost/my_npm"
 }
