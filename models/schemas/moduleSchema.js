@@ -1,8 +1,7 @@
 'use strict';
 let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
 
-let releaseSchema = new Schema({
+let releaseSchema = new mongoose.Schema({
     version: String,
     path: String,
     date: {
@@ -11,7 +10,7 @@ let releaseSchema = new Schema({
     }
 });
 
-let moduleSchema = new Schema({
+let moduleSchema = new mongoose.Schema({
     name: String,
     package: String,
     currentVersion: releaseSchema,

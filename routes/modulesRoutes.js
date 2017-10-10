@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-let moduleController = require('../controllers/moduleController');
+let moduleController = require('../controllers/modulesController');
 
 router.get('/', moduleController.all);
 router.post('/', moduleController.publish);
