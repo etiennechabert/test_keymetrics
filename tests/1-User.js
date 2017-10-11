@@ -44,7 +44,7 @@ describe('User basic story', function() {
 
     it("Get a user", (done) => {
         chai.request(server)
-            .get('/users/' + userId)
+            .get('/users/' + userJson.email)
             .end((err, res) => {
                 expect(res.status).to.be.equal(200);
                 done();
@@ -84,18 +84,9 @@ describe('User error test', function() {
             });
     });
 
-    it("Get a user bad format id", (done) => {
-        chai.request(server)
-            .get('/users/' + 42)
-            .end((err, res) => {
-                expect(res.status).to.be.equal(400);
-                done();
-            })
-    });
-
     it("Get a user 404", (done) => {
         chai.request(server)
-            .get('/users/' + userId.split('').reverse().join(''))
+            .get('/users/404@test.fr')
             .end((err, res) => {
                 expect(res.status).to.be.equal(404);
                 done();

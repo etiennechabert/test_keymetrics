@@ -1,26 +1,21 @@
 'use strict';
 
 let User = require('../models/userModel');
-
-function userFormat(user) {
-    let userObj = user.toObject();
-    delete userObj.password;
-    return userObj;
-}
+let userHelper = require('./helpers/userHelper');
 
 exports.all = function(req, res) {
     User.all(function(err, users) {
         if (err) throw err;
-        res.send({users: users.map(userFormat)});
+        res.send({users: users.map(userHelper.userFormat)});
     })
 };
 
 exports.get = function(req, res) {
-    User.get(req.params.user_id, function (err, user) {
+    User.findByEmail(req.params.email, function (err, user) {
         try {
             if (err) throw err;
             if (user)
-                res.send({user: userFormat(user)});
+                res.send({user: userHelper.userFormat(user)});
             else
                 res.status(404).send({userNotFound: req.params.user_id});
         } catch (error) {
@@ -42,7 +37,7 @@ exports.create = function(req, res) {
     User.create(req.body, (err, user) => {
         try {
             if (err) throw err;
-            res.send({user: userFormat(user)});
+            res.send({user: userHelper.userFormat(user)});
         } catch (error) {
             switch (error.name) {
                 case 'ValidationError':
