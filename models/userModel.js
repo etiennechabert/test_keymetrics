@@ -5,10 +5,6 @@ let UserSchema = require('./schemas/userSchema');
 mongoose.model('UserModel', UserSchema);
 let UserModel = mongoose.model('UserModel');
 
-UserModel.all = function(err, res) {
-    UserModel.find(err, res);
-};
-
 UserModel.create = function(data, cb) {
     new UserModel(data).save(cb);
 };

@@ -53,7 +53,7 @@ describe("Module basic", function() {
                 done();
             });
     });
-    it("Create of module", (done) => {
+    it("Create a module", (done) => {
         let moduleJson = {};
         moduleJson.base64Content = fileToBase64('./tests/misc/archive21.tgz');
         moduleJson.checkSum = md5(moduleJson.base64Content);
@@ -66,6 +66,21 @@ describe("Module basic", function() {
                 expect(res.status).to.be.equal(200);
                 expect(res.body.module).to.be.not.empty;
                 module1 = res.body.module;
+                done();
+            });
+    });
+    it("Create a 2nd module", (done) => {
+        let moduleJson = {};
+        moduleJson.base64Content = fileToBase64('./tests/misc/archive42.tgz');
+        moduleJson.checkSum = md5(moduleJson.base64Content);
+        moduleJson.package = JSON.parse(stripJsonComments(fs.readFileSync('./tests/misc/package42.json', 'utf-8')));
+        chai.request(server)
+            .post('/modules')
+            .auth(userJson.email, userJson.password)
+            .send(moduleJson)
+            .end((err, res) => {
+                expect(res.status).to.be.equal(200);
+                expect(res.body.module).to.be.not.empty;
                 done();
             });
     });

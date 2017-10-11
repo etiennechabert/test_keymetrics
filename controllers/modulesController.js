@@ -5,8 +5,8 @@ let md5 = require('md5');
 let packageJsonValidator = require('package-json-validator').PJV;
 let moduleHelper = require('./helpers/moduleHelper');
 
-exports.all = function(req, res) {
-    ModuleModel.all(function(err, modules) {
+exports.list = function(req, res) {
+    ModuleModel.find(function(err, modules) {
         if (err)
             console.error(err);
         res.send({modules: modules.map(moduleHelper.moduleFormat)});

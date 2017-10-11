@@ -9,10 +9,6 @@ mongoose.model('ReleaseModel', releaseSchema);
 let ModuleModel = mongoose.model('ModuleModel');
 let ReleaseModel = mongoose.model('ReleaseModel');
 
-ModuleModel.all = function(cb) {
-    ModuleModel.find(cb);
-};
-
 ModuleModel.get = function(name, cb) {
     ModuleModel.findOne({name: name}, cb);
 };

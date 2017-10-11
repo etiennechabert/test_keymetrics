@@ -3,8 +3,8 @@
 let User = require('../models/userModel');
 let userHelper = require('./helpers/userHelper');
 
-exports.all = function(req, res) {
-    User.all(function(err, users) {
+exports.list = function(req, res) {
+    User.find(function(err, users) {
         if (err) throw err;
         res.send({users: users.map(userHelper.userFormat)});
     })
